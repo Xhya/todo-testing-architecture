@@ -1,3 +1,6 @@
 import TodolistSlice from "./todolist.reducer";
 
-export const { addItem: addItemAction } = TodolistSlice.actions;
+export const { 
+    addItem: addItemAction,
+    deleteItem: deleteItemAction,
+} = TodolistSlice.actions;
