@@ -1,4 +1,4 @@
-import { TodolistGatewayMock } from "../../../store/dependencies";
+import { TodolistGatewayMock } from "../../../store/todolistGatewayMock";
 import {
   createStore,
   ReduxStore,
@@ -28,18 +28,17 @@ describe("todolist tests", () => {
     test("should add item", async () => {
       await store.dispatch(addItem("Toto"));
       expect(getItemValueList()).toEqual(["Toto"]);
-      store.dispatch(addItem("Titi"));
+      await store.dispatch(addItem("Titi"));
       expect(getItemValueList()).toEqual(["Toto", "Titi"]);
-      store.dispatch(addItem("Tata"));
+      await store.dispatch(addItem("Tata"));
       expect(getItemValueList()).toEqual(["Toto", "Titi", "Tata"]);
     });
 
-  test("should delete item", () => {
-    store.dispatch(addItem("Toto"));
-    // store.dispatch(addItem("Tata"));
-    // store.dispatch(deleteItem(mockUUID1));
-
-    //expect(getItemValueList()).toEqual(["Tata"]);
+  test("should delete item", async () => {
+    await store.dispatch(addItem("Toto"));
+    await store.dispatch(addItem("Tata"));
+    await store.dispatch(deleteItem("1"));
+    expect(getItemValueList()).toEqual(["Tata"]);
   });
 
   const getItemValueList = () =>

@@ -7,7 +7,7 @@ import TodolistSlice, {
   TodolistI,
 } from "./todolist/todolist.reducer";
 import { useDispatch } from "react-redux";
-import { TodolistGatewayMock } from "./dependencies";
+import { TodolistGatewayMock } from "./todolistGatewayMock";
 
 export const createStore = (dependencies: Dependencies) =>
   configureStore({
