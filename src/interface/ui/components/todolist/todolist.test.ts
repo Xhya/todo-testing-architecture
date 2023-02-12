@@ -5,7 +5,7 @@ import {
   ReduxStore,
   RootState,
 } from "../../../store/store.config";
-import { addItem, deleteItem } from "./todolist.dispatcher";
+import { addItem, deleteItem, refreshTodolist } from "./todolist.dispatcher";
 import TodoViewModel from "./todolist.viewmodel";
 
 describe("todolist tests", () => {
@@ -19,26 +19,32 @@ describe("todolist tests", () => {
     initialState = store.getState();
   });
 
-    test("should init", () => {
-      expect(store.getState()).toEqual({
-        ...initialState,
-      });
+  test("should init", () => {
+    expect(store.getState()).toEqual({
+      ...initialState,
     });
+  });
 
-    test("should add item", async () => {
-      await store.dispatch(addItem("Toto"));
-      expect(getItemValueList()).toEqual(["Toto"]);
-      await store.dispatch(addItem("Titi"));
-      expect(getItemValueList()).toEqual(["Toto", "Titi"]);
-      await store.dispatch(addItem("Tata"));
-      expect(getItemValueList()).toEqual(["Toto", "Titi", "Tata"]);
-    });
+  test("should get todolist", async () => {
+    await store.dispatch(refreshTodolist());
+    expect(getItemValueList()).toEqual(["Tomate"]);
+  });
+
+
+  test("should add item", async () => {
+    await store.dispatch(addItem("Toto"));
+    expect(getItemValueList()).toEqual(["Toto"]);
+    await store.dispatch(addItem("Titi"));
+    expect(getItemValueList()).toEqual(["Toto", "Titi"]);
+    await store.dispatch(addItem("Tata"));
+    expect(getItemValueList()).toEqual(["Toto", "Titi", "Tata"]);
+  });
 
   test("should delete item", async () => {
+    await store.dispatch(refreshTodolist());
     await store.dispatch(addItem("Toto"));
-    await store.dispatch(addItem("Tata"));
     await store.dispatch(deleteItem("1"));
-    expect(getItemValueList()).toEqual(["Tata"]);
+    expect(getItemValueList()).toEqual(["Tomate"]);
   });
 
   const getItemValueList = () =>

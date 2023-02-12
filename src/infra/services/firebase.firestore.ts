@@ -5,8 +5,9 @@ import {
   getDoc as firebaseGetDoc,
   getDocs,
   collection,
+  deleteDoc,
 } from "firebase/firestore";
-import { firebaseApp } from "../services/firebase.config";
+import { firebaseApp } from "./firebase.config";
 
 export enum FIREBASE_KEY {
   LIST = "list",
@@ -41,11 +42,15 @@ export default class FirebaseFirestore {
     return docSnap.data() as FirebaseTodoItemI;
   }
 
-  async store(
-    itemId: string,
-    item: any,
-    collectionKey: FIREBASE_KEY
-  ): Promise<void> {
+  async store({
+    itemId,
+    item,
+    collectionKey,
+  }: {
+    itemId: string;
+    item: any;
+    collectionKey: FIREBASE_KEY;
+  }): Promise<void> {
     return setDoc(doc(this.db, collectionKey, itemId), item);
   }
 
@@ -56,5 +61,15 @@ export default class FirebaseFirestore {
   ): Promise<void> {
     const docRef = doc(this.db, collectionKey, itemId);
     await setDoc(docRef, item, { merge: true });
+  }
+
+  async delete({
+    itemId,
+    collectionKey,
+  }: {
+    itemId: string;
+    collectionKey: FIREBASE_KEY;
+  }): Promise<void> {
+    await deleteDoc(doc(this.db, collectionKey, itemId));
   }
 }

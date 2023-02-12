@@ -1,14 +1,10 @@
 import { Action, Store } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { configureStore } from "@reduxjs/toolkit";
-import TodolistSlice, {
-  ListItem,
-  ListItemValue,
-  TodolistI,
-} from "./todolist/todolist.reducer";
+import TodolistSlice, { TodolistI } from "./todolist/todolist.reducer";
 import { useDispatch } from "react-redux";
-import { TodolistGatewayMock } from "../../infra/todolist/todolist.gateway.mock";
 import { TodolistGatewayInterface } from "../../infra/todolist/todolist.gateway.interface";
+import { TodolistGatewayImpl } from "../../infra/todolist/todolist.gateway";
 
 export const createStore = (dependencies: Dependencies) =>
   configureStore({
@@ -21,7 +17,9 @@ export const createStore = (dependencies: Dependencies) =>
       }),
   });
 
-export const store = createStore({ todolistGateway: new TodolistGatewayMock() });
+export const store = createStore({
+  todolistGateway: new TodolistGatewayImpl(),
+});
 
 export interface Dependencies {
   todolistGateway: TodolistGatewayInterface;

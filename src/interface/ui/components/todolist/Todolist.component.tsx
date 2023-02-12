@@ -1,14 +1,18 @@
 import TodolistItem from "./todolist-item/TodolistItem.component";
 import { useSelector } from "react-redux";
 import TodoViewModel from "./todolist.viewmodel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../store/store.config";
-import { addItem } from "./todolist.dispatcher";
+import { addItem, refreshTodolist } from "./todolist.dispatcher";
 
 function Todolist() {
   const dispatch = useAppDispatch();
   const list = useSelector(TodoViewModel.list);
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    dispatch(refreshTodolist());
+  }, [dispatch]);
 
   const uiList = list?.map((item, index) => (
     <TodolistItem item={item} key={index} />
