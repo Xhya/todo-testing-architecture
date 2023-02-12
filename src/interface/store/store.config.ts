@@ -7,7 +7,8 @@ import TodolistSlice, {
   TodolistI,
 } from "./todolist/todolist.reducer";
 import { useDispatch } from "react-redux";
-import { TodolistGatewayMock } from "../../infra/gateways/todolistGatewayMock";
+import { TodolistGatewayMock } from "../../infra/todolist/todolist.gateway.mock";
+import { TodolistGatewayInterface } from "../../infra/todolist/todolist.gateway.interface";
 
 export const createStore = (dependencies: Dependencies) =>
   configureStore({
@@ -23,11 +24,7 @@ export const createStore = (dependencies: Dependencies) =>
 export const store = createStore({ todolistGateway: new TodolistGatewayMock() });
 
 export interface Dependencies {
-  todolistGateway: TodolistGateway;
-}
-
-export interface TodolistGateway {
-  addItem: (itemValue: ListItemValue) => ListItem;
+  todolistGateway: TodolistGatewayInterface;
 }
 
 export type ReduxStore = Store<RootState> & {

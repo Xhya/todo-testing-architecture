@@ -1,16 +1,16 @@
-import { TodolistGatewayMock } from "../../../../infra/gateways/todolistGatewayMock";
+import { TodolistGatewayInterface } from "../../../../infra/todolist/todolist.gateway.interface";
+import { TodolistGatewayMock } from "../../../../infra/todolist/todolist.gateway.mock";
 import {
   createStore,
   ReduxStore,
   RootState,
-  TodolistGateway,
 } from "../../../store/store.config";
 import { addItem, deleteItem } from "./todolist.dispatcher";
 import TodoViewModel from "./todolist.viewmodel";
 
 describe("todolist tests", () => {
   let store: ReduxStore;
-  let todolistGatewayMock: TodolistGateway;
+  let todolistGatewayMock: TodolistGatewayInterface;
   let initialState: RootState;
 
   beforeEach(() => {
