@@ -1,4 +1,4 @@
-import { TodolistGateway } from "./store.config";
+import { TodolistGateway } from "../../interface/store/store.config";
 
 export class TodolistGatewayMock implements TodolistGateway {
   private _id = 0;

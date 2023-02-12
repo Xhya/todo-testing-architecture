@@ -1,4 +1,4 @@
-import { TodolistGatewayMock } from "../../../store/todolistGatewayMock";
+import { TodolistGatewayMock } from "../../../../infra/gateways/todolistGatewayMock";
 import {
   createStore,
   ReduxStore,
