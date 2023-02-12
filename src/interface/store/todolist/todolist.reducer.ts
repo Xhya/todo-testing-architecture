@@ -31,9 +31,9 @@ const TodolistSlice = createSlice({
     deleteItem(
       state: TodolistI,
       action: PayloadAction<{ itemId: ListItemId }>
-    ) {
+    ) {      
       state.list = state.list.filter(
-        (item) => item.id === action.payload.itemId
+        (item) => item.id !== action.payload.itemId
       );
     },
   },
