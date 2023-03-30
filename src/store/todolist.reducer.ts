@@ -4,43 +4,38 @@ export type ListItemId = string;
 export type ListItemValue = string;
 export interface ListItem {
   id: ListItemId;
-  value: ListItemValue;
+  text: ListItemValue;
+  checked: boolean;
 }
+export type Todo ={ [id: string]: ListItem };
 
 export interface TodolistI {
-  list: ListItem[];
+  list: Todo;
+  searchedValue?: string;
 }
 
 const initialState: TodolistI = {
-  list: [],
+  list: {},
 };
+
+export const accessList: (list: any) => ListItem[] = (list) => Object.values(list);
 
 const TodolistSlice = createSlice({
   name: "Todolist",
   initialState: initialState,
   reducers: {
-    setTodolist(
-      state: TodolistI,
-      action: PayloadAction<{ todolist: ListItem[] }>
-    ) {
+    setTodolist(state: TodolistI, action: PayloadAction<{ todolist: Todo }>) {
       state.list = action.payload.todolist;
     },
     addItem(
       state: TodolistI,
       action: PayloadAction<{ itemValue: ListItemValue; id: ListItemId }>
     ) {
-      state.list.push({
+      state.list[action.payload.id] = ({
         id: action.payload.id,
-        value: action.payload.itemValue,
+        text: action.payload.itemValue,
+        checked: false,
       });
-    },
-    deleteItem(
-      state: TodolistI,
-      action: PayloadAction<{ itemId: ListItemId }>
-    ) {
-      state.list = state.list.filter(
-        (item) => item.id !== action.payload.itemId
-      );
     },
   },
 });

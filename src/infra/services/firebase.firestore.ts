@@ -15,13 +15,13 @@ export enum FIREBASE_KEY {
 
 export interface FirebaseTodoItemI {
   id: string;
-  value: string;
+  text: string;
 }
 
 export default class FirebaseFirestore {
   db = getFirestore(firebaseApp);
 
-  async getCollection(collectionKey: FIREBASE_KEY): Promise<any[]> {
+  async getCollection(collectionKey: FIREBASE_KEY): Promise<any> {
     let items: any[] = [];
 
     const docs = await getDocs(collection(this.db, collectionKey));
@@ -54,11 +54,15 @@ export default class FirebaseFirestore {
     return setDoc(doc(this.db, collectionKey, itemId), item);
   }
 
-  async update(
-    itemId: string,
-    item: any,
-    collectionKey: FIREBASE_KEY
-  ): Promise<void> {
+  async update({
+    itemId,
+    item,
+    collectionKey,
+  }: {
+    itemId: string;
+    item: any;
+    collectionKey: FIREBASE_KEY;
+  }): Promise<void> {
     const docRef = doc(this.db, collectionKey, itemId);
     await setDoc(docRef, item, { merge: true });
   }

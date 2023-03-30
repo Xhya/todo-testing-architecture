@@ -1,10 +1,11 @@
 import { Action, Store } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { configureStore } from "@reduxjs/toolkit";
-import TodolistSlice, { TodolistI } from "./todolist/todolist.reducer";
 import { useDispatch } from "react-redux";
-import { TodolistGatewayInterface } from "../../infra/todolist/todolist.gateway.interface";
-import { TodolistGatewayImpl } from "../../infra/todolist/todolist.gateway";
+import { TodolistWebserviceInterface } from "../infra/todolist/todolist.webservice.interface";
+import { TodolistWebservice } from "../infra/todolist/todolist.webservice";
+import { TodolistWebserviceMock } from "../infra/todolist/todolist.webservice.mock";
+import TodolistSlice, { TodolistI } from "./todolist.reducer";
 
 export const createStore = (dependencies: Dependencies) =>
   configureStore({
@@ -12,17 +13,17 @@ export const createStore = (dependencies: Dependencies) =>
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: {
-          extraArgument: { todolistGateway: dependencies.todolistGateway },
+          extraArgument: { todolistWebservice: dependencies.todolistWebservice },
         },
       }),
   });
 
 export const store = createStore({
-  todolistGateway: new TodolistGatewayImpl(),
+  todolistWebservice: new TodolistWebservice(),
 });
 
 export interface Dependencies {
-  todolistGateway: TodolistGatewayInterface;
+  todolistWebservice: TodolistWebserviceInterface;
 }
 
 export type ReduxStore = Store<RootState> & {
